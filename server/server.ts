@@ -4,6 +4,8 @@ import express from 'express';
 import handlebars from 'handlebars';
 import path from 'path';
 
+type ServerMapFunction = (input: any) => any;
+
 const app = express();
 const port = 8080;
 
@@ -29,13 +31,28 @@ for (const componentName of componentNames) {
     }
 }
 
+const loadServerMapFunction = (frameName: string): ServerMapFunction => {
+    const serverFileName = path.join(__dirname, '..', 'src', '_frames', frameName, 'server.ts');
+
+    let map = (input: any): any => input;
+    if (existsSync(serverFileName)) {
+        const serverFile = require(serverFileName);
+        return serverFile.map;
+    }
+
+    return (input) => input;
+}
+
 app.use(express.static('server/public'));
 
-app.get('/', async (_req, res) => {
+app.get('/:frame', async (req, res) => {
+    const map = loadServerMapFunction(req.params.frame);
+    const inputVariation = { price: '999' };
+
     const indexFileName = path.join(__dirname, 'index.hbs');
     const indexFile = await fs.readFile(indexFileName, { encoding: 'utf8' });
     const template = handlebars.compile(indexFile);
-    res.send(template({}));
+    res.send(template({ variation: map(inputVariation) }));
 });
 
 app.listen(port, () => {

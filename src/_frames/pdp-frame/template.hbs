@@ -1,3 +1,11 @@
-<div class="pdp-frame">
-    {{> price price=999 }}
-</div>
+<pdp-frame class="pdp-frame">
+
+    <pdp-tracking data-tracking-data="{not that interesting}">
+        {{> price value=variation.price }}
+    </pdp-tracking>
+
+    <pdp-tracking data-tracking-data="{very interesting, isn't it?}">
+        {{> price value='10,00' }}
+    </pdp-tracking>
+
+</pdp-frame>
