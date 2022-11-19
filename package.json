@@ -1,0 +1,23 @@
+{
+  "name": "webcomponents-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node build/buildComponents.js && npx ts-node server/server.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.14",
+    "@types/glob": "^8.0.0",
+    "@types/handlebars": "^4.1.0",
+    "@types/node": "^18.11.9",
+    "esbuild": "^0.15.14",
+    "express": "^4.18.2",
+    "glob": "^8.0.3",
+    "handlebars": "^4.7.7",
+    "typescript": "^4.9.3"
+  }
+}
